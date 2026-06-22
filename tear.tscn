@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://d75pgvkrvr37"]
+
+[ext_resource type="Script" uid="uid://dv58unksokqnh" path="res://tear.gd" id="1_x57pu"]
+[ext_resource type="Texture2D" uid="uid://bg5sduq4vsxkb" path="res://FS/ball.png" id="2_c04oc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g1idr"]
+size = Vector2(48, 44)
+
+[node name="Tear" type="Area2D" unique_id=844311527]
+collision_layer = 8
+collision_mask = 6
+script = ExtResource("1_x57pu")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=328361555]
+scale = Vector2(0.093, 0.085)
+texture = ExtResource("2_c04oc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=486141216]
+shape = SubResource("RectangleShape2D_g1idr")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=661604165]
+position = Vector2(10, 10)
+rect = Rect2(-10, -10, 48, 44)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]
