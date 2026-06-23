@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=4]
+[gd_scene load_steps=7 format=4]
 
 [ext_resource type="Script" path="res://room.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://bywy7wmfg0yp7" path="res://FS/wall.png" id="2_wall_tex"]
+[ext_resource type="PackedScene" path="res://enemy.tscn" id="3_enemy"]
+[ext_resource type="PackedScene" path="res://item_pedestal.tscn" id="4_pedestal"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_north"]
 size = Vector2(128, 64)
@@ -23,6 +25,8 @@ sources/0 = SubResource("TileSetAtlasSource_wall")
 
 [node name="Room" type="Node2D"]
 script = ExtResource("1_script")
+enemy_scene = ExtResource("3_enemy")
+item_pedestal_scene = ExtResource("4_pedestal")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_room")

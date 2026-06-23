@@ -68,6 +68,7 @@ func _move_player_to_room_smooth(coord: Vector2i, end_pos: Vector2, is_initial: 
 	if is_initial:
 		player.global_position = target_room_pos
 		camera.global_position = target_room_pos
+		_activate_current_room()
 		return
 		
 	transitioning = true
@@ -89,3 +90,10 @@ func _move_player_to_room_smooth(coord: Vector2i, end_pos: Vector2, is_initial: 
 	player.set_physics_process(true)
 	player.set_process(true)
 	transitioning = false
+	
+	_activate_current_room()
+
+func _activate_current_room() -> void:
+	if spawned_rooms.has(current_room_coord):
+		var room = spawned_rooms[current_room_coord]
+		room.activate_room(player)

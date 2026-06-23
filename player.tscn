@@ -7,7 +7,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g1idr"]
 size = Vector2(65, 70)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hurtbox"]
+size = Vector2(50, 55)
+
 [node name="player" type="CharacterBody2D" unique_id=1540921356]
+collision_layer = 1
 collision_mask = 6
 script = ExtResource("1_onrkg")
 tear_scene = ExtResource("2_hqtel")
@@ -19,3 +23,13 @@ texture = ExtResource("2_i3pqv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=626756965]
 position = Vector2(-0.5, 11)
 shape = SubResource("RectangleShape2D_g1idr")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_hurtbox")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

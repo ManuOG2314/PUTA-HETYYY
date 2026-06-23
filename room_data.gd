@@ -5,3 +5,5 @@ var room_type: int
 var exits: Array = []
 var layout_id: int = 0
 var visited := false
+var enemy_count: int = 0
+var cleared := false
