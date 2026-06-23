@@ -1,58 +1,21 @@
-[gd_scene format=4 uid="uid://b1qorl2m40phy"]
+[gd_scene load_steps=5 format=4 uid="uid://b1qorl2m40phy"]
 
-[ext_resource type="PackedScene" uid="uid://ciebuv4klcym7" path="res://player.tscn" id="1_0xm2m"]
-[ext_resource type="Texture2D" uid="uid://bywy7wmfg0yp7" path="res://FS/wall.png" id="1_ig7tw"]
+[ext_resource type="Script" path="res://main.gd" id="1_main_script"]
+[ext_resource type="PackedScene" uid="uid://ciebuv4klcym7" path="res://player.tscn" id="2_player_scene"]
+[ext_resource type="Script" path="res://level_generator.gd" id="3_level_gen_script"]
+[ext_resource type="PackedScene" uid="uid://clspndg2b7rws" path="res://room.tscn" id="4_room_scene"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0xm2m"]
-texture = ExtResource("1_ig7tw")
-texture_region_size = Vector2i(64, 64)
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-3:0/0 = 0
-3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-0:1/0 = 0
-0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-1:1/0 = 0
-1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-2:1/0 = 0
-2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-3:1/0 = 0
-3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-0:2/0 = 0
-0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-1:2/0 = 0
-1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-2:2/0 = 0
-2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-3:2/0 = 0
-3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-0:3/0 = 0
-0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-1:3/0 = 0
-1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-2:3/0 = 0
-2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-3:3/0 = 0
-3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main_script")
 
-[sub_resource type="TileSet" id="TileSet_g1idr"]
-tile_size = Vector2i(64, 64)
-physics_layer_0/collision_layer = 2
-physics_layer_0/collision_mask = 13
-sources/0 = SubResource("TileSetAtlasSource_0xm2m")
+[node name="player" parent="." instance=ExtResource("2_player_scene")]
 
-[node name="Main" type="Node2D" unique_id=1312094562]
+[node name="LevelGenerator" type="Node2D" parent="."]
+script = ExtResource("3_level_gen_script")
+room_scene = ExtResource("4_room_scene")
+num_rooms = 8
 
-[node name="player" parent="." unique_id=1540921356 instance=ExtResource("1_0xm2m")]
-
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=999749348]
-tile_map_data = PackedByteArray("AAD2//z/AAABAAAAAAD2//3/AAABAAEAAAD2//7/AAABAAIAAAD2////AAABAAMAAAD2//j/AAABAAAAAAD2//n/AAABAAEAAAD2//r/AAABAAIAAAD2//v/AAABAAMAAAD3//j/AAACAAAAAAD4//j/AAABAAAAAAD5//j/AAACAAAAAAD6//j/AAADAAAAAAD7//j/AAABAAAAAAD8//j/AAACAAAAAAD9//j/AAADAAAAAAD+//j/AAABAAAAAAD///j/AAACAAAAAAAAAPj/AAADAAAAAAABAPj/AAABAAAAAAACAPj/AAACAAAAAAADAPj/AAADAAAAAAAEAPj/AAABAAAAAAAFAPj/AAACAAAAAAAGAPj/AAADAAAAAAAGAPn/AAADAAEAAAAGAPr/AAADAAIAAAAGAPv/AAADAAMAAAAGAPz/AAADAAAAAAAGAP3/AAADAAEAAAAGAP7/AAADAAIAAAAGAP//AAADAAMAAAAGAAAAAAADAAAAAAAGAAEAAAADAAEAAAAGAAIAAAADAAIAAAAGAAMAAAADAAMAAAD2/wAAAAADAAAAAAD2/wEAAAADAAEAAAD2/wIAAAADAAIAAAD2/wMAAAADAAMAAAABAAMAAAADAAAAAAABAAQAAAADAAEAAAABAAUAAAADAAIAAAABAAYAAAADAAMAAAD7/wMAAAADAAAAAAD7/wQAAAADAAEAAAD7/wUAAAADAAIAAAD7/wYAAAADAAMAAAAFAAQAAAAAAAMAAAAGAAQAAAABAAMAAAAHAAQAAAACAAMAAAAIAAQAAAADAAMAAAD0/wQAAAAAAAMAAAD1/wQAAAABAAMAAAD2/wQAAAACAAMAAAD3/wQAAAADAAMAAAD7/wIAAAAAAAMAAAD8/wIAAAABAAMAAAD9/wIAAAACAAMAAAD+/wIAAAADAAMAAAD//wIAAAABAAMAAAAAAAIAAAACAAMAAAABAAIAAAADAAMAAAAIAAUAAAADAAAAAAAIAAYAAAADAAEAAAAIAAcAAAADAAIAAAAIAAgAAAADAAMAAAAIAA4AAAADAAAAAAAIAA8AAAADAAEAAAAIABAAAAADAAIAAAAIABEAAAADAAMAAAD1/w4AAAADAAAAAAD1/w8AAAADAAEAAAD1/xAAAAADAAIAAAD1/xEAAAADAAMAAAD8/wcAAAADAAAAAAD8/wgAAAADAAEAAAD8/wkAAAADAAIAAAD8/woAAAADAAMAAAAAAAcAAAADAAAAAAAAAAgAAAADAAEAAAAAAAkAAAADAAIAAAAAAAoAAAADAAMAAAD1/woAAAADAAAAAAD1/wsAAAADAAEAAAD1/wwAAAADAAIAAAD1/w0AAAADAAMAAAD1/wUAAAADAAAAAAD1/wYAAAADAAEAAAD1/wcAAAADAAIAAAD1/wgAAAADAAMAAAD1/wkAAAADAAAAAAAJAA4AAAAAAAIAAAAKAA4AAAABAAIAAAALAA4AAAACAAIAAAAMAA4AAAADAAIAAAAJAAgAAAAAAAIAAAAKAAgAAAABAAIAAAALAAgAAAACAAIAAAAMAAgAAAADAAIAAAANAAgAAAAAAAIAAAAOAAgAAAABAAIAAAAPAAgAAAACAAIAAAAQAAgAAAADAAIAAAANAA4AAAAAAAIAAAAOAA4AAAABAAIAAAAPAA4AAAACAAIAAAAQAA4AAAADAAIAAAAFABIAAAAAAAIAAAAGABIAAAABAAIAAAAHABIAAAACAAIAAAAIABIAAAADAAIAAAA=")
-tile_set = SubResource("TileSet_g1idr")
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1901721920]
-offset = Vector2(0, 352)
-zoom = Vector2(0.6, 0.6)
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.9, 0.9)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0

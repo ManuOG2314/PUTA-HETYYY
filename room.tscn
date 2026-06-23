@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=4]
+
+[ext_resource type="Script" path="res://room.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bywy7wmfg0yp7" path="res://FS/wall.png" id="2_wall_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_north"]
+size = Vector2(128, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_east"]
+size = Vector2(64, 128)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wall"]
+texture = ExtResource("2_wall_tex")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[sub_resource type="TileSet" id="TileSet_room"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 13
+sources/0 = SubResource("TileSetAtlasSource_wall")
+
+[node name="Room" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_room")
+
+[node name="Doors" type="Node2D" parent="."]
+
+[node name="North" type="Area2D" parent="Doors"]
+position = Vector2(0, -544)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/North"]
+shape = SubResource("RectangleShape2D_north")
+
+[node name="South" type="Area2D" parent="Doors"]
+position = Vector2(0, 480)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/South"]
+shape = SubResource("RectangleShape2D_north")
+
+[node name="East" type="Area2D" parent="Doors"]
+position = Vector2(896, -32)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/East"]
+shape = SubResource("RectangleShape2D_east")
+
+[node name="West" type="Area2D" parent="Doors"]
+position = Vector2(-960, -32)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/West"]
+shape = SubResource("RectangleShape2D_east")
+
+[connection signal="body_entered" from="Doors/North" to="." method="_on_north_body_entered"]
+[connection signal="body_entered" from="Doors/South" to="." method="_on_south_body_entered"]
+[connection signal="body_entered" from="Doors/East" to="." method="_on_east_body_entered"]
+[connection signal="body_entered" from="Doors/West" to="." method="_on_west_body_entered"]

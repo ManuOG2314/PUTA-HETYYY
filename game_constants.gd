@@ -1,0 +1,25 @@
+enum RoomType {
+	START,
+	NORMAL,
+	TREASURE,
+	BOSS,
+	SHOP,
+	SECRET,
+	SUPER_SECRET
+}
+
+enum Direction {
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+}
+
+const TILE_SIZE := 64
+const ROOM_WIDTH := 30
+const ROOM_HEIGHT := 17
+
+const ROOM_PIXEL_SIZE := Vector2i(
+	ROOM_WIDTH * TILE_SIZE,
+	ROOM_HEIGHT * TILE_SIZE
+)

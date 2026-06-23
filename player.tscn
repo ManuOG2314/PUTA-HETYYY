@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://doqse76ss1u1w" path="res://FS/pj/pj grande/pj grande noma.png" id="2_i3pqv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g1idr"]
-size = Vector2(66, 126)
+size = Vector2(65, 70)
 
 [node name="player" type="CharacterBody2D" unique_id=1540921356]
 collision_mask = 6
@@ -17,4 +17,5 @@ scale = Vector2(0.6609375, 0.63437504)
 texture = ExtResource("2_i3pqv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=626756965]
+position = Vector2(-0.5, 11)
 shape = SubResource("RectangleShape2D_g1idr")
