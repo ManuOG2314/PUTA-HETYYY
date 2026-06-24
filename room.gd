@@ -143,21 +143,35 @@ func _spawn_enemies(player: Node2D) -> void:
 	if count <= 0:
 		count = randi_range(2, 4)
 	
+	var valid_positions = _get_valid_spawn_positions()
+	if valid_positions.size() == 0:
+		valid_positions.append(Vector2.ZERO)
+	
+	for i in range(count):
+		var enemy = enemy_scene.instantiate()
+		var spawn_pos = valid_positions.pick_random()
+		if valid_positions.size() > 1:
+			valid_positions.erase(spawn_pos)
+		
+		add_child(enemy)
+		enemy.position = spawn_pos
+		enemy.set_target(player)
+		enemy.died.connect(_on_enemy_died.bind(enemy))
+		_active_enemies.append(enemy)
+
+func _get_valid_spawn_positions() -> Array[Vector2]:
+	var list: Array[Vector2] = []
 	var half_w = GameConstants.ROOM_WIDTH / 2
 	var half_h = GameConstants.ROOM_HEIGHT / 2
 	var tile_sz = GameConstants.TILE_SIZE
 	
-	for i in range(count):
-		var enemy = enemy_scene.instantiate()
-		
-		var spawn_x = randf_range(-(half_w - 4) * tile_sz, (half_w - 4) * tile_sz)
-		var spawn_y = randf_range(-(half_h - 3) * tile_sz, (half_h - 3) * tile_sz)
-		
-		add_child(enemy)
-		enemy.position = Vector2(spawn_x, spawn_y)
-		enemy.set_target(player)
-		enemy.died.connect(_on_enemy_died.bind(enemy))
-		_active_enemies.append(enemy)
+	for x in range(-(half_w - 2), half_w - 2):
+		for y in range(-(half_h - 2), half_h - 2):
+			var cell = Vector2i(x, y)
+			if tile_map.get_cell_source_id(cell) == -1:
+				var pos = Vector2(x * tile_sz + tile_sz / 2.0, y * tile_sz + tile_sz / 2.0)
+				list.append(pos)
+	return list
 
 func _on_enemy_died(enemy: Node2D) -> void:
 	_active_enemies.erase(enemy)

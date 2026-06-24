@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal health_changed(current: int, maximum: int)
+signal stats_changed
 signal died
 
 @export var speed: float = 500.0
@@ -70,6 +71,11 @@ func take_damage(amount: int) -> void:
 	await get_tree().create_timer(invincibility_time).timeout
 	_invincible = false
 	modulate.a = 1.0
+	
+	for area in $Hurtbox.get_overlapping_areas():
+		if area.is_in_group("enemy_hitbox"):
+			_on_hurtbox_area_entered(area)
+			break
 
 func _start_invincibility_blink() -> void:
 	while _invincible:
@@ -83,6 +89,24 @@ func _start_invincibility_blink() -> void:
 func heal(amount: int) -> void:
 	current_health = mini(current_health + amount, max_health)
 	health_changed.emit(current_health, max_health)
+
+func add_speed(amount: float) -> void:
+	speed += amount
+	stats_changed.emit()
+
+func add_damage(amount: int) -> void:
+	damage += amount
+	stats_changed.emit()
+
+func reduce_fire_rate(amount: float) -> void:
+	fire_rate = maxf(fire_rate - amount, 0.1)
+	stats_changed.emit()
+
+func add_max_health(amount: int) -> void:
+	max_health += amount
+	current_health += amount
+	health_changed.emit(current_health, max_health)
+	stats_changed.emit()
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy_hitbox"):

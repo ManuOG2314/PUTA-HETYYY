@@ -21,3 +21,10 @@ dicho esto, no lo voy a seguir, so, cosas que tengo que hacer:
     esto debería hacer que sea más dopamínico y ayudaría a que haya diferentes builds y demás. y que no sea siempre lo mismo.
     aparte de eso, sería interesante el tema de skills, tipo que haya distintos personajes, no ? y cada uno con su pasiva
     y que haya un árbol de talentos, o algo por el estilo, supongo que eso lo haría más adictivo y demás.
+
+    podría hacer amuletos tipo terrarios de cada planeta (distintos), esos te dan mejoras específicas que te sirven para los planetas siguientes igual
+    y que cada planeta tiene su item final para llevarlo y no se, usarlo en la última sala para algo ?
+    sería interesante que cada sala tenga algo distinto, tipo no sé
+    sería diferente a las builds supongo, un simple multiplicador o una habilidad pasiva
+    tipo, si viene un mundo ácido que te quita vida progresivamente por poner un ejemplo
+    pues ese amuleto te ayuda dándote vida cada tanto o haciendo que el efecto sea menor

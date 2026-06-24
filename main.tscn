@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://b1qorl2m40phy"]
+[gd_scene load_steps=6 format=4 uid="uid://b1qorl2m40phy"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_main_script"]
 [ext_resource type="PackedScene" uid="uid://ciebuv4klcym7" path="res://player.tscn" id="2_player_scene"]
 [ext_resource type="Script" path="res://level_generator.gd" id="3_level_gen_script"]
 [ext_resource type="PackedScene" uid="uid://clspndg2b7rws" path="res://room.tscn" id="4_room_scene"]
+[ext_resource type="PackedScene" uid="uid://cgrj7j5c7w73f" path="res://hud.tscn" id="5_hud_scene"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main_script")
@@ -19,3 +20,5 @@ num_rooms = 8
 zoom = Vector2(0.9, 0.9)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
+
+[node name="HUD" parent="." instance=ExtResource("5_hud_scene")]

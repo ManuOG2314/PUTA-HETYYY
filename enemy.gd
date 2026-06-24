@@ -7,6 +7,8 @@ signal died
 @export var contact_damage: int = 1
 @export var knockback_force: float = 300.0
 
+const DAMAGE_NUMBER_SCENE = preload("res://damage_number.tscn")
+
 var current_health: int
 var _knockback_velocity := Vector2.ZERO
 var _target: Node2D = null
@@ -33,6 +35,11 @@ func _physics_process(delta: float) -> void:
 
 func take_damage(amount: int) -> void:
 	current_health -= amount
+	
+	var dmg_num = DAMAGE_NUMBER_SCENE.instantiate()
+	dmg_num.position = position
+	get_parent().add_child(dmg_num)
+	dmg_num.set_text(amount)
 	
 	if _target and is_instance_valid(_target):
 		var knock_dir = _target.global_position.direction_to(global_position)

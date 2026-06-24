@@ -46,12 +46,10 @@ func _on_body_entered(body: Node2D) -> void:
 func _apply_buff(player: Node2D) -> void:
 	match buff_type:
 		BuffType.SPEED:
-			player.speed += 80.0
+			player.add_speed(80.0)
 		BuffType.DAMAGE:
-			player.damage += 1
+			player.add_damage(1)
 		BuffType.FIRE_RATE:
-			player.fire_rate = maxf(player.fire_rate - 0.08, 0.1)
+			player.reduce_fire_rate(0.08)
 		BuffType.HEALTH:
-			player.max_health += 2
-			player.current_health += 2
-			player.health_changed.emit(player.current_health, player.max_health)
+			player.add_max_health(2)

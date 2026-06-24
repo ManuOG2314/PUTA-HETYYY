@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://cgrj7j5c7w73f"]
+
+[ext_resource type="Script" uid="uid://u8q60pgf7cv1" path="res://hud.gd" id="1_script"]
+
+[node name="HUD" type="CanvasLayer" unique_id=376402499]
+
+[node name="HUDControl" type="Control" parent="." unique_id=814125315]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="HealthContainer" type="PanelContainer" parent="HUDControl" unique_id=2083521212]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -60.0
+offset_right = 200.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="HUDControl/HealthContainer" unique_id=885265125]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/HealthContainer/MarginContainer" unique_id=97635812]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HPLabel" type="Label" parent="HUDControl/HealthContainer/MarginContainer/HBoxContainer" unique_id=2088305029]
+layout_mode = 2
+text = "HP"
+
+[node name="HPBar" type="ProgressBar" parent="HUDControl/HealthContainer/MarginContainer/HBoxContainer" unique_id=1705010395]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+show_percentage = false
+
+[node name="HPVal" type="Label" parent="HUDControl/HealthContainer/MarginContainer/HBoxContainer" unique_id=2123608160]
+layout_mode = 2
+text = "6 / 6"
+
+[node name="StatsContainer" type="PanelContainer" parent="HUDControl" unique_id=2033007531]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -180.0
+offset_right = 280.0
+offset_bottom = -20.0
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="HUDControl/StatsContainer" unique_id=1950313785]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUDControl/StatsContainer/MarginContainer" unique_id=1528893339]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="StatsLabel" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer" unique_id=701807178]
+layout_mode = 2
+text = "STATS DE MIERDA"
+
+[node name="StatsGrid" type="GridContainer" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer" unique_id=220921785]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 6
+columns = 2
+
+[node name="DmgLabel" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=1159693461]
+layout_mode = 2
+text = "Dmg"
+
+[node name="DmgVal" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=1132081716]
+layout_mode = 2
+text = "1"
+
+[node name="SpdLabel" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=670042155]
+layout_mode = 2
+text = "Spd"
+
+[node name="SpdVal" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=279490809]
+layout_mode = 2
+text = "500"
+
+[node name="RateLabel" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=158030320]
+layout_mode = 2
+text = "Rate"
+
+[node name="RateVal" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=1972349281]
+layout_mode = 2
+text = "0.40s"

@@ -9,12 +9,17 @@ var transitioning := false
 @onready var level_generator = $LevelGenerator
 @onready var player = $player
 @onready var camera = $Camera2D
+@onready var hud = $HUD/HUDControl
 
 func _ready() -> void:
 	spawned_rooms = level_generator.generate_level()
 	for pos in spawned_rooms:
 		var room = spawned_rooms[pos]
 		room.door_entered.connect(_on_room_door_entered.bind(pos))
+	
+	player.health_changed.connect(_on_player_health_changed)
+	player.stats_changed.connect(_on_player_stats_changed)
+	hud.update_hud(player)
 	
 	_move_player_to_room_smooth(Vector2i.ZERO, Vector2.ZERO, true)
 
@@ -97,3 +102,9 @@ func _activate_current_room() -> void:
 	if spawned_rooms.has(current_room_coord):
 		var room = spawned_rooms[current_room_coord]
 		room.activate_room(player)
+
+func _on_player_health_changed(_current: int, _max: int) -> void:
+	hud.update_hud(player)
+
+func _on_player_stats_changed() -> void:
+	hud.update_hud(player)
