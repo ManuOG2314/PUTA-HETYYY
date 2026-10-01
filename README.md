@@ -4,3 +4,4 @@ un grrr
 
 
 mañana acomodo TODO OK, está todo desordenado pero tranquis pijes yo lo acomodo
+eso fue mentira pero ahora si lo acomodo pijes
