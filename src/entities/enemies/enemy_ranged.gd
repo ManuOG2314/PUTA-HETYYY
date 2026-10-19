@@ -62,5 +62,5 @@ func _shoot_at_target() -> void:
 	projectile.direction = global_position.direction_to(_target.global_position)
 	get_parent().add_child(projectile)
 	
-	await get_tree().create_timer(fire_rate_ranged).timeout
+	await get_tree().create_timer(fire_rate_ranged, false).timeout
 	_can_shoot_ranged = true

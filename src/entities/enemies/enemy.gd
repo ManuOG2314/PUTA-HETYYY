@@ -181,7 +181,7 @@ func _die_and_explode() -> void:
 
 func _apply_burn_loop() -> void:
 	while _burn_ticks > 0 and is_instance_valid(self):
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.5, false).timeout
 		if not is_instance_valid(self):
 			return
 		_burn_ticks -= 1
@@ -189,7 +189,7 @@ func _apply_burn_loop() -> void:
 
 func _apply_poison_loop() -> void:
 	while _poison_ticks > 0 and is_instance_valid(self):
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(1.0, false).timeout
 		if not is_instance_valid(self):
 			return
 		_poison_ticks -= 1
@@ -220,6 +220,6 @@ func _flash_hit(type: int = GameConstants.DamageType.PHYSICAL) -> void:
 		modulate = Color(5.0, 5.0, 0.5)
 	else:
 		modulate = Color(10, 10, 10)
-	await get_tree().create_timer(0.08).timeout
+	await get_tree().create_timer(0.08, false).timeout
 	if is_instance_valid(self):
 		_is_flashing = false

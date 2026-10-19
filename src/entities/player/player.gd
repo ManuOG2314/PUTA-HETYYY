@@ -131,7 +131,9 @@ func _shoot(direction: Vector2) -> void:
 		var recoil_tween = create_tween()
 		recoil_tween.tween_property(pistol, "position:x", 20.0, 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	
-	await get_tree().create_timer(fire_rate).timeout
+	# process_always = false: el cooldown se congela si el juego se pausa
+	# (pantalla de Game Over/Victoria). Ref AUDITORIA 3.4.
+	await get_tree().create_timer(fire_rate, false).timeout
 	_can_fire = true
 
 func set_damage_type(type: int) -> void:
@@ -166,7 +168,7 @@ func take_damage(amount: int) -> void:
 	
 	_invincible = true
 	_start_invincibility_blink()
-	await get_tree().create_timer(invincibility_time).timeout
+	await get_tree().create_timer(invincibility_time, false).timeout
 	_invincible = false
 	modulate.a = 1.0
 	
@@ -178,11 +180,11 @@ func take_damage(amount: int) -> void:
 func _start_invincibility_blink() -> void:
 	while _invincible:
 		modulate.a = 0.3
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(0.1, false).timeout
 		if not _invincible:
 			break
 		modulate.a = 1.0
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(0.1, false).timeout
 
 func heal(amount: int) -> void:
 	current_health = mini(current_health + amount, max_health)

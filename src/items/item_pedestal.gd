@@ -136,7 +136,7 @@ func _show_insufficient_warning() -> void:
 	shake_tween.tween_property(_cost_label, "position:x", orig_pos.x + 6.0, 0.05)
 	shake_tween.tween_property(_cost_label, "position:x", orig_pos.x, 0.05)
 	
-	await get_tree().create_timer(1.2).timeout
+	await get_tree().create_timer(1.2, false).timeout
 	if is_instance_valid(self) and is_instance_valid(_cost_label):
 		_cost_label.text = orig_text
 		_cost_label.position = orig_pos

@@ -7,16 +7,34 @@ signal health_updated(current: int, maximum: int)
 @export var boss_name: String = "NÚCLEO M.A.T.R.I.Z."
 
 var _attack_timer: float = 0.0
+var _telegraphing := false
+const DRIFT_SPEED := 40.0  # Derivación lenta hacia el player (combate activo)
 
 func _ready() -> void:
 	max_health = 40
 	super._ready()
 
 func _physics_process(delta: float) -> void:
+	_update_state_visuals(delta)
+
+	if _knockback_velocity.length() > 10.0:
+		_knockback_velocity = _knockback_velocity.lerp(Vector2.ZERO, 8.0 * delta)
+		velocity = _knockback_velocity
+	elif _target and is_instance_valid(_target):
+		# Deriva lenta hacia el player: el boss era un "turret" fijo por un
+		# bug de copia/pega; el drift obliga a reposicionarse (AUDITORIA 3.3/5)
+		var dir = global_position.direction_to(_target.global_position)
+		velocity = dir * DRIFT_SPEED
+	else:
+		velocity = Vector2.ZERO
+
+	move_and_slide()
+
+func _update_state_visuals(delta: float) -> void:
+	# Mismo contrato de estados que Enemy, pero con el tinte propio del boss
 	if _slow_timer > 0.0:
 		_slow_timer -= delta
-
-	if not _is_flashing:
+	if not _is_flashing and not _telegraphing:
 		if _slow_timer > 0.0:
 			modulate = Color(0.3, 0.8, 2.0)
 		elif _burn_ticks > 0:
@@ -25,14 +43,6 @@ func _physics_process(delta: float) -> void:
 			modulate = Color(0.3, 2.0, 0.3)
 		else:
 			modulate = Color(1.3, 0.3, 1.3)
-
-	if _knockback_velocity.length() > 10.0:
-		_knockback_velocity = _knockback_velocity.lerp(Vector2.ZERO, 8.0 * delta)
-		velocity = _knockback_velocity
-	else:
-		velocity = Vector2.ZERO
-		
-	move_and_slide()
 
 func _process(delta: float) -> void:
 	if not _target or not is_instance_valid(_target):
@@ -44,8 +54,8 @@ func _process(delta: float) -> void:
 		_perform_random_attack()
 
 func _perform_random_attack() -> void:
-	var choices = [0, 1, 2]
-	var choice = choices.pick_random()
+	await _telegraph()  # Aviso visual ANTES de ejecutar el ataque
+	var choice = [0, 1, 2].pick_random()
 	match choice:
 		0:
 			_attack_aimed_burst()
@@ -53,6 +63,16 @@ func _perform_random_attack() -> void:
 			_attack_ring()
 		2:
 			_attack_spiral()
+
+func _telegraph() -> void:
+	# Destello blanco rápido que anticipa la ráfaga/ring/spiral.
+	# Regla de diseño: toda amenaza debe poder verse venir.
+	_telegraphing = true
+	var t = create_tween()
+	t.tween_property(self, "modulate", Color(3.5, 3.5, 3.5), 0.15)
+	t.tween_property(self, "modulate", Color(1.3, 0.3, 1.3), 0.2)
+	await t.finished
+	_telegraphing = false
 
 func _spawn_bullet(dir: Vector2) -> void:
 	if not boss_tear_scene:
@@ -70,7 +90,7 @@ func _attack_aimed_burst() -> void:
 			return
 		var dir = global_position.direction_to(_target.global_position)
 		_spawn_bullet(dir)
-		await get_tree().create_timer(0.2).timeout
+		await get_tree().create_timer(0.2, false).timeout
 
 func _attack_ring() -> void:
 	var num_bullets = 12
@@ -88,7 +108,7 @@ func _attack_spiral() -> void:
 		var angle = start_angle + (PI * 2.5 / num_bullets) * i
 		var dir = Vector2(cos(angle), sin(angle))
 		_spawn_bullet(dir)
-		await get_tree().create_timer(0.08).timeout
+		await get_tree().create_timer(0.08, false).timeout
 
 func take_damage(amount: int, type: int = GameConstants.DamageType.PHYSICAL) -> void:
 	super.take_damage(amount, type)
