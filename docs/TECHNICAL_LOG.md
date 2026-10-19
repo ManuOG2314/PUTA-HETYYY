@@ -18,6 +18,7 @@
 | 5 | 2026-10-19 | Demo 0.1 | Autoload `Events` (EventBus) |
 | 6 | 2026-10-19 | Demo 0.1 | Autoload `Audio` + SFX sintetizados |
 | 7 | 2026-10-19 | Demo 0.1 | Config de `project.godot` (renderer, capas físicas) |
+| 8 | 2026-10-19 | Demo 0.1 | Sincronización con el remoto + push del repo |
 
 ---
 
@@ -213,10 +214,36 @@ tocar gameplay.
 `--headless --quit-after 600` (juego realmente ejecutando el loop: generación,
 spawn, combate simulado sin input) **sin un solo ERROR/WARNING en salida**.
 
-**Nota**: el executale del check es `Godot_v4.7-stable_win64_console.exe`
-(desktop de este equipo). Anotado como comando estándar del proyecto:
+**Nota**: el ejecutable del check es `Godot_v4.7-stable_win64_console.exe`
+(desktop de este equipo). Comandos estándar del proyecto:
 ```
-"c:\...\Godot_v4.7-stable_win64_console.exe" --headless --path . --import
-"--..." --headless --path . --quit-after 600   # smoke test
+"...\Godot_v4.7-stable_win64_console.exe" --headless --path . --import
+"...\Godot_v4.7-stable_win64_console.exe" --headless --path . --quit-after 600   # smoke test
 ```
+
+---
+
+## Entrada 8 — 2026-10-19 · Sincronización con el remoto + push
+
+**Etapa**: Demo 0.1 (repo) · Ref AUDITORIA.md §2.1
+
+**Contexto**: el push inicial falló (`non-fast-forward`): en el remoto había un
+commit nuestro sin traer (`12a90cc`, un ajuste de 1 línea al README, con el
+README viejo "grrr"). Primero intenté rebase para historia lineal, pero se
+trababa en el editor Vim de la resolución de conflicto (entorno Windows/headless).
+
+**Solución**: `git merge -X ours origin/main` con
+`GIT_MERGE_AUTOEDIT=no` — el conflicto del README se resuelve a favor de la
+versión profesional (`-X ours` gana *nuestros* hunks; `-X theirs` habría
+devuelto el README viejo). Se intentó primera resolución manual con
+`git checkout --theirs README.md` + abandonar cuando Vim pegó.
+
+**Commits resultantes**: 4 commits de trabajo (`84c0f26`→`496ded1` rebaseados a
+ nuevos hashes por el merge) + merge `76e8fb0` → empujados a
+`origin/main` (`12a90cc..76e8fb0`).
+
+**Regla añadida**: higiene del repo verificada con `git fetch` ANTES de
+comenzar el trabajo; y comprobar `git log --oneline origin/main..main` al
+cerrar la sesión para no dejar trabajo local sin publicar.
+
 
