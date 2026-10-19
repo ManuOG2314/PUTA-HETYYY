@@ -63,7 +63,7 @@ func setup_pedestal(type: int, item_cost: int = 0) -> void:
 	
 	if has_node("Sprite2D"):
 		var spr = $Sprite2D
-		spr.texture = load("res://FS/ball.png")
+		spr.texture = load("res://assets/orb/ball.png")
 		spr.scale = Vector2(0.12, 0.12)
 		spr.modulate = buff_colors.get(buff_type, Color.WHITE)
 		
