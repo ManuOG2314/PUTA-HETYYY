@@ -128,8 +128,8 @@ func take_damage(amount: int, type: int = GameConstants.DamageType.PHYSICAL) -> 
 		_knockback_velocity = knock_dir * knockback_force
 	
 	_flash_hit(type)
-	if get_tree().current_scene.has_method("add_shake"):
-		get_tree().current_scene.add_shake(4.0, 0.15)
+	Events.shake_requested.emit(4.0, 0.15)
+	Events.hit_sfx.emit()
 	
 	if current_health <= 0:
 		_die_and_explode()
@@ -175,8 +175,10 @@ func _die_and_explode() -> void:
 		var explosion = explosion_scene.instantiate()
 		explosion.global_position = global_position
 		get_parent().call_deferred("add_child", explosion)
+		Events.explosion_sfx.emit()
 		
 	died.emit()
+	Events.enemy_died_sfx.emit()
 	queue_free()
 
 func _apply_burn_loop() -> void:

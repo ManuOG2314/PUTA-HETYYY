@@ -135,3 +135,88 @@ a sí mismo con su propia espiral si el disparo reentraba).
 **Deuda registada (Demo 0.2)**: el `match` de modulate por estado del boss sigue
 duplicado respecto a `Enemy` (aunque con su color propio); se consolidará cuando
 los estados enemigos vayan a una máquina de estados con `UpdateVisuals`.
+
+---
+
+## Entrada 5 — 2026-10-19 · Autoload `Events` (EventBus)
+
+**Etapa**: Demo 0.1 (arquitectura) · Ref AUDITORIA.md §2.4
+
+**Nuevo archivo**: `src/core/events.gd` (autoload `Events`).
+
+**Responsabilidad**: bus de señales global. Regla nueva del proyecto: los sistemas
+no se hablan por `get_tree().current_scene.has_method(...)` ni `get_parent()`.
+
+**Qué se reemplazó**:
+- `player.gd::take_damage` y `enemy.gd::take_damage` emitían shake haceindo
+  `get_tree().current_scene.has_method("add_shake")` → ahora emiten
+  `Events.shake_requested.emit(intensidad, duracion)`.
+- `main.gd::_ready()` conecta `Events.shake_requested` a su `add_shake()`
+  (único dueno de la cámara; sin cambios de comportamiento).
+- Señales cosméticas añadidas al bus para el audio: `shoot_sfx`, `hit_sfx`,
+  `pickup_sfx`, `player_hurt_sfx`, `enemy_died_sfx`, `explosion_sfx`.
+
+**Emisores conectados**:
+- `player.gd`: dispara → `shoot_sfx`; recibe daño → `shake` + `player_hurt_sfx`.
+- `enemy.gd`: recibe hit → `hit_sfx` (+shake); muere → `enemy_died_sfx`;
+  explosión on-kill → `explosion_sfx`.
+- `crystal_pickup.gd`: recoger → `pickup_sfx`.
+
+**Deuda registada (Demo 0.2)**: añadir más señales de juego (room_cleared, run_won,
+damage_type_changed) para poder desacoplar HUD del player (§3.5).
+
+---
+
+## Entrada 6 — 2026-10-19 · Autoload `Audio` + SFX sintetizados
+
+**Etapa**: Demo 0.1 (audio) · Ref AUDITORIA.md §5.1
+
+**Nuevos archivos**:
+- `src/core/audio.gd` (autoload `Audio`): pool de 8 `AudioStreamPlayer`
+  reutilizables + dict `SFX_PATHS` (nombre → ruta) + caché lazy `load()`
+  (no `preload`, para no romper el parseo del primer escaneo headless de Godot).
+  Los eventos cosméticos de `Events` se conectan a su sonido correspondiente en
+  `Audio._ready()`: el gameplay no sabe qué archivo suena.
+- `scripts/generate_sfx.py`: generador reproducible de los 6 SFX (ondas seno /
+  ruido con envolventes y filtros simples, PCM16 44100 Hz). Los .wav son
+  generados, no grabados: la fuente del sonido queda versionada como código.
+- `assets/audio/`: `shoot.wav`, `hit.wav`, `enemy_die.wav`, `pickup.wav`,
+  `player_hurt.wav`, `explosion.wav`.
+
+**Volumen por superficie**: los handlers de `Events` bajan entre -2 y -6 dB
+(los .wav se generan a ~50% de amplitud; el bus Master queda "apto para música"
+futura vía buses `SFX`/`Music` — pendiente Demo 0.2).
+
+**Decisión**: empezar con SFX sintetizados en vez de pack externo para la demo
+(toque propio + 0 MB de licencia pendiente). Si en Demo 0.2 se decide ir por un
+pack (por ejemplo Sons of Skart/Sonniss), `audio.gd` permite cambiar el dict sin
+tocar gameplay.
+
+---
+
+## Entrada 7 — 2026-10-19 · Config de `project.godot`
+
+**Etapa**: Demo 0.1 (config) · Ref AUDITORIA.md §2.3
+
+**Cambios**:
+1. Autoloads registrados: `Events`, `Audio` (Entradas 5 y 6).
+2. `renderer/rendering_method="mobile"` → `"gl_compatibility"` (juego 2D
+   pixel-art en PC: backend más estable y eficiente para 2D; "mobile" era una
+   config de prototipo). También eliminado `rendering_device/driver.windows`
+   (solo aplica a renderers RD; era ruido).
+3. Quito `3d/physics_engine="Jolt Physics"` (juego 2D, configuración muerta).
+4. `layer_names`: añadidos los 4 layers de `2d_physics` con los mismos nombres
+   que los de render (Player/Walls/Enemies/Tears). Los .tscn siguen usando
+   números en crudo (mask 13, etc.); migrarlos a nombres es deuda de Demo 0.2.
+
+**Verificación**: `--headless --import` sin errores y smoke test
+`--headless --quit-after 600` (juego realmente ejecutando el loop: generación,
+spawn, combate simulado sin input) **sin un solo ERROR/WARNING en salida**.
+
+**Nota**: el executale del check es `Godot_v4.7-stable_win64_console.exe`
+(desktop de este equipo). Anotado como comando estándar del proyecto:
+```
+"c:\...\Godot_v4.7-stable_win64_console.exe" --headless --path . --import
+"--..." --headless --path . --quit-after 600   # smoke test
+```
+

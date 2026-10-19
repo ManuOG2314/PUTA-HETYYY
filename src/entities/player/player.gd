@@ -124,6 +124,7 @@ func _shoot(direction: Vector2) -> void:
 	new_tear.split_on_hit = split_on_hit
 	
 	get_parent().add_child(new_tear)
+	Events.shoot_sfx.emit()
 	
 	if has_node("GunPivot/Pistol"):
 		var pistol = $GunPivot/Pistol
@@ -159,9 +160,10 @@ func take_damage(amount: int) -> void:
 	current_health -= amount
 	health_changed.emit(current_health, max_health)
 	
-	if get_tree().current_scene.has_method("add_shake"):
-		get_tree().current_scene.add_shake(15.0, 0.4)
-		
+	# Desacoplado via EventBus (antes: get_tree().current_scene.has_method(...))
+	Events.shake_requested.emit(15.0, 0.4)
+	Events.player_hurt_sfx.emit()
+	
 	if current_health <= 0:
 		died.emit()
 		return

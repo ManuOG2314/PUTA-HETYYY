@@ -53,6 +53,7 @@ func _collect(player: Node2D) -> void:
 	
 	if player.has_method("add_crystals"):
 		player.add_crystals(crystal_value)
+	Events.pickup_sfx.emit()
 		
 	var tween = create_tween().set_parallel(true)
 	tween.tween_property(self, "scale", Vector2(1.8, 1.8), 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)

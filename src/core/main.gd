@@ -15,6 +15,7 @@ var _shake_duration: float = 0.0
 @onready var hud = $HUD/HUDControl
 
 func _ready() -> void:
+	Events.shake_requested.connect(add_shake)
 	spawned_rooms = level_generator.generate_level()
 	for pos in spawned_rooms:
 		var room = spawned_rooms[pos]
