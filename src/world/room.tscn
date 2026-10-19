@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://bbpcckqyvauv7"]
+
+[ext_resource type="Script" uid="uid://dshw4baearocj" path="res://src/world/room.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bge15xgd2fa3v" path="res://assets/tilesets/tileset_x2.png" id="2_wall_tex"]
+[ext_resource type="PackedScene" uid="uid://cymbx5jc4v5n2" path="res://src/entities/enemies/enemy.tscn" id="3_enemy"]
+[ext_resource type="PackedScene" path="res://src/items/item_pedestal.tscn" id="4_pedestal"]
+[ext_resource type="PackedScene" uid="uid://cx4t12b3m2d3o" path="res://src/entities/enemies/enemy_ranged.tscn" id="5_ranged_enemy"]
+[ext_resource type="PackedScene" uid="uid://dmx3h6a3m6c4b" path="res://src/entities/enemies/boss.tscn" id="6_boss"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wall"]
+texture = ExtResource("2_wall_tex")
+texture_region_size = Vector2i(64, 64)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+5:2/0 = 0
+5:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+1:5/0 = 0
+1:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+7:5/0 = 0
+7:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+4:6/0 = 0
+4:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+7:3/0 = 0
+7:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+33:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_room"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 13
+sources/0 = SubResource("TileSetAtlasSource_wall")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_north"]
+size = Vector2(128, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_east"]
+size = Vector2(64, 128)
+
+[node name="Room" type="Node2D" unique_id=1768713526]
+y_sort_enabled = true
+script = ExtResource("1_script")
+enemy_scene = ExtResource("3_enemy")
+item_pedestal_scene = ExtResource("4_pedestal")
+ranged_enemy_scene = ExtResource("5_ranged_enemy")
+boss_scene = ExtResource("6_boss")
+
+[node name="FloorTileMapLayer" type="TileMapLayer" parent="." unique_id=342438972]
+z_index = -1
+tile_set = SubResource("TileSet_room")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=2047279917]
+y_sort_enabled = true
+tile_set = SubResource("TileSet_room")
+
+[node name="Doors" type="Node2D" parent="." unique_id=1463840785]
+
+[node name="North" type="Area2D" parent="Doors" unique_id=995674484]
+position = Vector2(0, -544)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/North" unique_id=857700186]
+shape = SubResource("RectangleShape2D_north")
+
+[node name="South" type="Area2D" parent="Doors" unique_id=2108887086]
+position = Vector2(0, 480)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/South" unique_id=1420395516]
+shape = SubResource("RectangleShape2D_north")
+
+[node name="East" type="Area2D" parent="Doors" unique_id=523424951]
+position = Vector2(896, -32)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/East" unique_id=1134306694]
+shape = SubResource("RectangleShape2D_east")
+
+[node name="West" type="Area2D" parent="Doors" unique_id=599156556]
+position = Vector2(-960, -32)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/West" unique_id=246760163]
+shape = SubResource("RectangleShape2D_east")
+
+[connection signal="body_entered" from="Doors/North" to="." method="_on_north_body_entered"]
+[connection signal="body_entered" from="Doors/South" to="." method="_on_south_body_entered"]
+[connection signal="body_entered" from="Doors/East" to="." method="_on_east_body_entered"]
+[connection signal="body_entered" from="Doors/West" to="." method="_on_west_body_entered"]

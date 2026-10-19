@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=4 uid="uid://b1qorl2m40phy"]
+
+[ext_resource type="Script" path="res://src/core/main.gd" id="1_main_script"]
+[ext_resource type="PackedScene" uid="uid://ciebuv4klcym7" path="res://src/entities/player/player.tscn" id="2_player_scene"]
+[ext_resource type="Script" path="res://src/world/level_generator.gd" id="3_level_gen_script"]
+[ext_resource type="PackedScene" uid="uid://bbpcckqyvauv7" path="res://src/world/room.tscn" id="4_room_scene"]
+[ext_resource type="PackedScene" uid="uid://cgrj7j5c7w73f" path="res://src/ui/hud.tscn" id="5_hud_scene"]
+
+[node name="Main" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_main_script")
+
+[node name="player" parent="." instance=ExtResource("2_player_scene")]
+
+[node name="LevelGenerator" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("3_level_gen_script")
+room_scene = ExtResource("4_room_scene")
+num_rooms = 8
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.9, 0.9)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+
+[node name="HUD" parent="." instance=ExtResource("5_hud_scene")]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://cx4t12b3m2d3p"]
+
+[ext_resource type="Script" path="res://src/combat/explosion.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bg5sduq4vsxkb" path="res://FS/ball.png" id="2_c04oc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_explosion"]
+radius = 60.0
+
+[node name="Explosion" type="Area2D"]
+z_index = 4
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_c04oc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_explosion")

@@ -1,0 +1,302 @@
+[gd_scene load_steps=8 format=3 uid="uid://cgrj7j5c7w73f"]
+
+[ext_resource type="Script" uid="uid://u8q60pgf7cv1" path="res://src/ui/hud.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://dmx3h6a3m6c4c" path="res://src/ui/minimap.tscn" id="2_minimap"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gameover"]
+bg_color = Color(0.12, 0.02, 0.02, 0.85)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_victory"]
+bg_color = Color(0.02, 0.08, 0.12, 0.85)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_bg"]
+bg_color = Color(0.15, 0.05, 0.15, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_fill"]
+bg_color = Color(0.7, 0.1, 0.8, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9, 0.4, 1, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="HUD" type="CanvasLayer" unique_id=376402499]
+
+[node name="HUDControl" type="Control" parent="." unique_id=814125315]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="CrystalsContainer" type="PanelContainer" parent="HUDControl" unique_id=309485721]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 140.0
+offset_bottom = 60.0
+
+[node name="MarginContainer" type="MarginContainer" parent="HUDControl/CrystalsContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/CrystalsContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CrystalIcon" type="Label" parent="HUDControl/CrystalsContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "💎"
+
+[node name="CrystalVal" type="Label" parent="HUDControl/CrystalsContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 1.8, 1.6, 1)
+theme_override_font_sizes/font_size = 18
+text = "0"
+
+[node name="MinimapContainer" parent="HUDControl" instance=ExtResource("2_minimap")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 160.0
+grow_horizontal = 0
+
+[node name="HealthContainer" type="PanelContainer" parent="HUDControl" unique_id=2083521212]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -60.0
+offset_right = 200.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="HUDControl/HealthContainer" unique_id=885265125]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/HealthContainer/MarginContainer" unique_id=97635812]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HPLabel" type="Label" parent="HUDControl/HealthContainer/MarginContainer/HBoxContainer" unique_id=2088305029]
+layout_mode = 2
+text = "HP"
+
+[node name="HPBar" type="ProgressBar" parent="HUDControl/HealthContainer/MarginContainer/HBoxContainer" unique_id=1705010395]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+show_percentage = false
+
+[node name="HPVal" type="Label" parent="HUDControl/HealthContainer/MarginContainer/HBoxContainer" unique_id=2123608160]
+layout_mode = 2
+text = "6 / 6"
+
+[node name="StatsContainer" type="PanelContainer" parent="HUDControl" unique_id=2033007531]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -230.0
+offset_right = 320.0
+offset_bottom = -20.0
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="HUDControl/StatsContainer" unique_id=1950313785]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUDControl/StatsContainer/MarginContainer" unique_id=1528893339]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="StatsLabel" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer" unique_id=701807178]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.8, 1, 1)
+text = "SISTEMA DE COMBATE"
+
+[node name="StatsGrid" type="GridContainer" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer" unique_id=220921785]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 4
+columns = 2
+
+[node name="DmgLabel" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=1159693461]
+layout_mode = 2
+text = "Daño"
+
+[node name="DmgVal" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=1132081716]
+layout_mode = 2
+text = "1"
+
+[node name="SpdLabel" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=670042155]
+layout_mode = 2
+text = "Velocidad"
+
+[node name="SpdVal" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=279490809]
+layout_mode = 2
+text = "500"
+
+[node name="RateLabel" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=158030320]
+layout_mode = 2
+text = "Cadencia"
+
+[node name="RateVal" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=1972349281]
+layout_mode = 2
+text = "0.40s"
+
+[node name="ElemLabel" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=158030321]
+layout_mode = 2
+text = "Núcleo"
+
+[node name="ElemVal" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=1972349282]
+layout_mode = 2
+text = "Físico"
+
+[node name="ChipsLabel" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=158030323]
+layout_mode = 2
+text = "Chips"
+
+[node name="ChipsVal" type="Label" parent="HUDControl/StatsContainer/MarginContainer/VBoxContainer/StatsGrid" unique_id=1972349284]
+layout_mode = 2
+text = "Ninguno"
+
+[node name="BossContainer" type="PanelContainer" parent="HUDControl" unique_id=987654321]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -250.0
+offset_top = 20.0
+offset_right = 250.0
+offset_bottom = 80.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUDControl/BossContainer" unique_id=987654322]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUDControl/BossContainer/MarginContainer" unique_id=987654323]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="BossName" type="Label" parent="HUDControl/BossContainer/MarginContainer/VBoxContainer" unique_id=987654324]
+layout_mode = 2
+text = "NÚCLEO M.A.T.R.I.Z."
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.9, 0.2, 0.9, 1)
+theme_override_font_sizes/font_size = 14
+
+[node name="BossHPBar" type="ProgressBar" parent="HUDControl/BossContainer/MarginContainer/VBoxContainer" unique_id=987654325]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_boss_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_boss_fill")
+value = 100.0
+show_percentage = false
+
+[node name="GameOverPanel" type="PanelContainer" parent="HUDControl"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gameover")
+
+[node name="CenterContainer" type="CenterContainer" parent="HUDControl/GameOverPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUDControl/GameOverPanel/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="HUDControl/GameOverPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 48
+text = "SISTEMA CAÍDO (Game Over)"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="HUDControl/GameOverPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Tu CPU de gravedad ha colapsado..."
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="HUDControl/GameOverPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Reiniciar Partida"
+
+[node name="VictoryPanel" type="PanelContainer" parent="HUDControl"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_victory")
+
+[node name="CenterContainer" type="CenterContainer" parent="HUDControl/VictoryPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUDControl/VictoryPanel/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="HUDControl/VictoryPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 1, 0.8, 1)
+theme_override_font_sizes/font_size = 48
+text = "PLANETA CONQUISTADO"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="HUDControl/VictoryPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "¡Núcleo del planeta asegurado con éxito!"
+horizontal_alignment = 1
+
+[node name="VictoryButton" type="Button" parent="HUDControl/VictoryPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Volver a Jugar"

@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cx4t12b3m2d3n"]
+
+[ext_resource type="Script" uid="uid://bxksiyjua5t43" path="res://src/combat/enemy_tear.gd" id="1_x57pu"]
+[ext_resource type="Texture2D" uid="uid://bg5sduq4vsxkb" path="res://FS/ball.png" id="2_c04oc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g1idr"]
+size = Vector2(32, 32)
+
+[node name="EnemyTear" type="Area2D" unique_id=1251182291]
+z_index = 4
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_x57pu")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=562393476]
+modulate = Color(1.8, 0.2, 0.2, 1)
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("2_c04oc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=845952205]
+shape = SubResource("RectangleShape2D_g1idr")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=337198384]
+rect = Rect2(-16, -16, 32, 32)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_exited"]

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://d75pgvkrvr37"]
+
+[ext_resource type="Script" uid="uid://dv58unksokqnh" path="res://src/combat/tear.gd" id="1_x57pu"]
+[ext_resource type="Texture2D" uid="uid://b6miq2hyurb5i" path="res://assets/weapons/laser.png" id="2_laser"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_laser"]
+size = Vector2(28, 12)
+
+[node name="Tear" type="Area2D" unique_id=844311527]
+z_index = 4
+collision_layer = 8
+collision_mask = 6
+script = ExtResource("1_x57pu")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=328361555]
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("2_laser")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=486141216]
+position = Vector2(-5, 1)
+shape = SubResource("RectangleShape2D_laser")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=661604165]
+position = Vector2(-4, 1)
+rect = Rect2(-16, -16, 32, 32)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

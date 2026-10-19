@@ -1,30 +1,52 @@
-En este TODO la idea es mantener una estructura supongo...
+# 📋 TODO — Hoja de Ruta y Tareas del Proyecto
 
-dicho esto, no lo voy a seguir, so, cosas que tengo que hacer:
+---
 
-1. ponle numeritos cuando le pegues a un enemigo (esto me lo dijo capi):
-* la idea es que salga el daño que le haces a un enemigo, esto supongo que es para que sea full dopamina insta cuando vayas leveando
-  supongo que para cerebros lisos, super roblox eso.
+## ✅ Tareas Completadas
 
-2.PONLE MAS COSAS AL JUEGO (si ok entiendo):
-* no se, ponle enemigos, no ? si no no hay nada que hacer, hay que ver que onda, qué hace el juego, etc.
-* cosas así
+### 🗺️ Navegación y Economía (Fase 1)
+* [x] **Minimapa Interactivo en Tiempo Real**:
+  - Dibuja el mapa de salas con niebla de guerra (revela salas adyacentes).
+  - Resalta la sala actual del jugador con borde pulsante.
+  - Iconos y colores distintivos para salas especiales: Inicio (Azul), Tesoro (`✦` Oro), Tienda (`💎` Esmeralda), Jefe (`💀` Carmesí).
+* [x] **Economía de Cristales de Energía**:
+  - Los enemigos sueltan cristales magnéticos de plasma al morir que vuelan hacia el jugador.
+  - Los jefes derrotados expulsan una fuente de cristales de alto valor.
+  - Contador de cristales integrado al HUD en tiempo real.
+* [x] **Implementación de la Sala de Tienda (`SHOP`)**:
+  - Generación procedimental de salas de tienda en extremos del nivel.
+  - Spawneo de 3 artículos con precios en cristales (Curación por 3💎, Mejora de Estadísticas por 6💎, Núcleo/Chip Avanzado por 10💎).
+  - Feedback visual con advertencia animada si no se tienen suficientes cristales.
 
-3.PONLE COSAS DE PODER SUPONGO:
-* items, armas, mejoras, si
-* no se, supongo que para eso sirven las salas, para lootear si supongo ?
-* o sea veo que esta el tema de que hay salas, hay pasillos, etc, pero nada mas, no hay nada que hacer, no se que onda
-  como es la logica
+### ⚡ Sistema Elemental y Combate
+* [x] **Números de Daño Flotantes**: Textos emergentes animados con colores dinámicos según el tipo de daño (Físico, Fuego, Hielo, Veneno, Electricidad).
+* [x] **Enemigo a Distancia**: Dron de ataque con IA de mantenimiento de rango y proyectiles esquivables (`enemy_ranged.gd`).
+* [x] **Núcleos y Modificadores de Poder**:
+  - *Fuego (Burn)*: Daño continuo en el tiempo (1 de daño cada 0.5s durante 2s).
+  - *Hielo (Freeze)*: Ralentización del 50% de velocidad durante 2.5s.
+  - *Veneno (Poison)*: Corrosión de larga duración (1 de daño cada 1.0s durante 5s).
+  - *Electricidad (Chain Shock)*: **Núcleo Voltaico** que encadena arcos de plasma eléctrico a enemigos cercanos con destello visual amarillo.
+  - *Modificadores Pasivos*: Perforación (`Pierce`), Disparo Divisor (`Split`) y Detonación en Cadena (`Explode on Kill`).
+* [x] **Animación y Visuales en Pedestales**: Orbes brillantes animados en levitación con los colores de cada mejora.
 
-  ok, supongo que debería pensar qué debería agregar.... No se me ocurre nada!
-    tuve una idea, supongo que podría hacer algo similar a los comodines de balatro, like sinergias entre cosas que tenga el pj, so
-    esto debería hacer que sea más dopamínico y ayudaría a que haya diferentes builds y demás. y que no sea siempre lo mismo.
-    aparte de eso, sería interesante el tema de skills, tipo que haya distintos personajes, no ? y cada uno con su pasiva
-    y que haya un árbol de talentos, o algo por el estilo, supongo que eso lo haría más adictivo y demás.
+### 🖥️ HUD y Experiencia de Usuario (UI/UX)
+* [x] **Panel de Estado de Combate**: El HUD muestra en tiempo real la Vida, Daño, Velocidad, Cadencia, Núcleo Elemental Activo y Chips Especiales equipados.
+* [x] **Corrección de Bugs Críticos**: Arreglado spawn de enemigos dentro de muros y sincronización de señales en proyectiles.
 
-    podría hacer amuletos tipo terrarios de cada planeta (distintos), esos te dan mejoras específicas que te sirven para los planetas siguientes igual
-    y que cada planeta tiene su item final para llevarlo y no se, usarlo en la última sala para algo ?
-    sería interesante que cada sala tenga algo distinto, tipo no sé
-    sería diferente a las builds supongo, un simple multiplicador o una habilidad pasiva
-    tipo, si viene un mundo ácido que te quita vida progresivamente por poner un ejemplo
-    pues ese amuleto te ayuda dándote vida cada tanto o haciendo que el efecto sea menor
+---
+
+## 📌 Próximas Tareas Pendientes (Roadmap)
+
+### ✨ Fase 2: VFX y Jugosidad Visual (*Game Juice*)
+- [ ] **Partículas GPU de Impacto (`GPUParticles2D`)**: Chispas y fragmentos de plasma al impactar enemigos o muros.
+- [ ] **Estelas de Plasma para Proyectiles**: Trazas de luz que sigan a los disparos según su elemento.
+- [ ] **Viñeta de Alerta Crítica**: Borde pulsante en pantalla cuando el jugador tenga 1 o 2 puntos de salud restante.
+
+### 👾 Fase 3: Jefe con Fase 2 (*Enrage Mode*)
+- [ ] **Sobrecarga del Jefe (<50% HP)**: Aura enrage roja/púrpura, mayor velocidad de ataque y disparo.
+- [ ] **Invocación de Drones**: El jefe invoca 2 drones escolta al entrar en Fase 2.
+- [ ] **Patrón de Ataque Avanzado**: Barrido de láser rotatorio orbital o lluvia de proyectiles densa.
+
+### 🎵 Fase 4: Gestor de Sonido Procedural (*SFX Synth*)
+- [ ] **AudioStreamGenerator Integrado**:
+  - Efectos de disparo, impacto de bala, daño sufrido, recolección de cristales/ítems y explosiones sintetizados en tiempo real.
